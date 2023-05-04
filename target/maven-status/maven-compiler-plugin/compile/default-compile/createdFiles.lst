@@ -1,2 +1,8 @@
 com\mycompany\accountingsystemui\JakartaRestConfiguration.class
+Entity\Country.class
+RestClient\RestClient.class
+Entity\UserMaster.class
+CDI\Admin_CDi.class
+CDI\Admin_CDi$1.class
+CDI\registration_bean.class
 com\mycompany\accountingsystemui\resources\JakartaEE8Resource.class
