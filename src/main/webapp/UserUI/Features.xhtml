@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      >
+    <h:head>
+        <title>Features</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+
+        <!--     Favicon -->
+        <link href="UserUI/img/favicon.ico" rel="icon"/>
+
+        <!--     Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true"/>
+        <!--    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+        -->
+
+        <!--     Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+        <!--     Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+        <link href="lib/animate/animate.min.css" rel="stylesheet"/>    
+
+        <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI/css/style.css"/>
+    </h:head>
+    <h:body>
+        <!-- Header Start -->
+        <ui:include src="header.xhtml"/>
+        <!-- Header End -->
+
+        <h:form>
+
+            <!-- Features Start -->
+            <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="container py-5">
+                    <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                        <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+                        <h1 class="mb-0">We Are Here to Grow Your Business Exponentially</h1>
+                    </div>
+                    <div class="row g-5">
+                        <div class="col-lg-4">
+                            <div class="row g-5">
+                                <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                                    <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fa fa-cubes text-white"></i>
+                                    </div>
+                                    <h4>Best In Industry</h4>
+                                    <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                                </div>
+                                <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                                    <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fa fa-award text-white"></i>
+                                    </div>
+                                    <h4>Award Winning</h4>
+                                    <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4  wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                            <div class="position-relative h-100">
+                                <img class="position-absolute w-100 h-100 rounded wow zoomIn" data-wow-delay="0.1s" src="img/feature.jpg" style="object-fit: cover;"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row g-5">
+                                <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                                    <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fa fa-users-cog text-white"></i>
+                                    </div>
+                                    <h4>Professional Staff</h4>
+                                    <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                                </div>
+                                <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                                    <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fa fa-phone-alt text-white"></i>
+                                    </div>
+                                    <h4>24/7 Support</h4>
+                                    <p class="mb-0">Magna sea eos sit dolor, ipsum amet lorem diam dolor eos et diam dolor</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Features Start -->
+
+        </h:form>
+
+        <!-- Footer Start -->
+        <ui:include src="/UserUI/footer.xhtml"/>
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+
+    </h:body>
+</html>
+
