@@ -28,12 +28,30 @@ public class RestClient {
 
     public RestClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("admin");
+        webTarget = client.target(BASE_URI);
     }
 
     public <T> T getallUser(Class<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path("getallUsers");
+        resource = resource.path("admin/getallUsers");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public void sendMessage(Object requestEntity) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("contact/sendMessage");
+        resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    public <T> T getSubscription(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("subscription/getSubscriptions");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T getallSource_Document(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("Admin/getAllSource_Document_Type");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -88,9 +106,8 @@ public class RestClient {
 //        resource = resource.path("getAllEmp");
 //        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
 //    }
-
     public void close() {
         client.close();
     }
-    
+
 }

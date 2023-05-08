@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" href="../vendors/feather/feather.css"/>
@@ -120,40 +121,73 @@
             </nav>
             <!-- partial -->   
             <div class="container-fluid page-body-wrapper">
-                    
+
                 <ui:include src="../subPages/SettingPanel.xhtml"/>
                 <ui:include src="admin_sidebar.xhtml"/>
-
                 <div class="main-panel">          
                     <div class="content-wrapper">
                         <div class="row">
 
-                            HElo Source Documents 
 
-                        </div>
-                    </div>
+
+                            <h:form>
+                                <p:dataTable widgetVar="dtsrc" value="#{userBean.displaySource_DocumentTypes()}" var="src" >
+                                    <f:facet name="header">
+                                        <div class="users-table-header">
+                                            <div class="d-flex justify-content-between">
+                                                <div style="font-weight: bold">Source Documnet</div>
+
+                                                <div class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                                                    <p:inputText id="globalFilter" onkeyup="PF('dtsrc').filter()" placeholder="Search" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </f:facet>
+
+                                    <p:column headerText="src Id" filterBy="#{src.srcDocumentTypeId}" sortBy="#{src.srcDocumentTypeId}">
+                                        <h:outputText value="#{src.srcDocumentTypeId}"/>
+                                    </p:column>
+                                    <p:column headerText="src Id" filterBy="#{src.title}" sortBy="#{src.title}">
+                                        <h:outputText value="#{src.title}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+
+
+                        </div>  
+
+                    </div> 
                     <!-- content-wrapper ends -->
                     <!-- partial:../../partials/_footer.html -->
-                    <footer class="footer">
-                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted  made with <i class="ti-heart text-danger ml-1"></i></span>
-                        </div>
-                    </footer>
+
                     <!-- partial -->
                 </div>
-                <!-- main-panel ends -->
+                <h:form id="dialogs">
+
+                    <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                     message="Delete the product?" header="Confirm" severity="warn">
+                        <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{crudView.deleteProduct}"
+                                         process="@this" 
+                                         oncomplete="PF('deleteProductDialog').hide()" />
+                        <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                         onclick="PF('deleteProductDialog').hide()" />
+                    </p:confirmDialog>
+                </h:form>
             </div>
-            <!-- page-body-wrapper ends -->
         </div>
 
-    </h:body>
-    <script src="../vendors/js/vendor.bundle.base.js"></script>
 
-    <script src="../js/off-canvas.js"></script>
-    <script src="../js/hoverable-collapse.js"></script>
-    <script src="../template.js"></script>
-    <script src="../js/settings.js"></script>
-    <script src="../js/todolist.js"></script>
+
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted  made with <i class="ti-heart text-danger ml-1"></i></span>
+            </div>
+        </footer>
+    </h:body>
+
+
 </html>
 

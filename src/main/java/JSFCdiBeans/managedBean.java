@@ -6,7 +6,8 @@ package JSFCdiBeans;
 
 import Entities.Contact;
 import Entities.Subscription;
-import RESTClient.MyRestCli;
+import Entities.UserMaster;
+import RestClient.RestClient;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -20,14 +21,13 @@ import javax.ws.rs.core.Response;
  *
  * @author Vijay Rana
  */
-@Named(value = "managedBean")
+@Named(value = "managedData")
 @SessionScoped
 public class managedBean implements Serializable {
 
     /**
      * Creates a new instance of managedBean
      */
-    
     //manages contact/feedback
     Contact contact;
 
@@ -35,14 +35,32 @@ public class managedBean implements Serializable {
     List<Subscription> subscriptions;
     GenericType<List<Subscription>> genSubscriptionList;
     List<String> features;
-    
+
+    //Display Users
+    //shows subscriptions
+    List<UserMaster> users;
+    GenericType<List<UserMaster>> genUserList;
+
     Response response;
-    MyRestCli client;
+
+    public List<UserMaster> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserMaster> users) {
+        this.users = users;
+    }
+    RestClient client;
 
     public managedBean() {
         contact = new Contact();
-        client = new MyRestCli();
-        genSubscriptionList = new GenericType<List<Subscription>>(){};
+        client = new RestClient();
+        genSubscriptionList = new GenericType<List<Subscription>>() {
+        };
+        
+        users=new ArrayList<UserMaster>();
+        genUserList = new GenericType<List<UserMaster>>(){};
+        
         subscriptions = new ArrayList<Subscription>();
         features = new ArrayList<String>();
     }
@@ -71,11 +89,17 @@ public class managedBean implements Serializable {
         System.out.println(contact.getContactId() + "  " + contact.getEmail() + "  " + contact.getFirstname() + "  " + contact.getLastname()
                 + "     " + contact.getTitle() + "     " + contact.getMessage());
     }
-    
-    public List<String> displayFeatures(Subscription sub)
-    {
+
+    public List<String> displayFeatures(Subscription sub) {
         features = Arrays.asList(sub.getFeatures().split(";"));
         //features = Arrays.asList(subscriptions.get(pos).getFeatures().toString().split(";"));
         return features;
+    }
+    
+    public List<UserMaster> DisplayUsers() {
+        response = client.getallUser(Response.class);
+        users = response.readEntity(genUserList);
+        System.out.println(users);
+        return (List<UserMaster>) users;
     }
 }
