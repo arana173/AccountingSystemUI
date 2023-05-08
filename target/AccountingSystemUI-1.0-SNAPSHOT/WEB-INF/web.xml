@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>homepage.jsf</welcome-file>
+        <welcome-file>adminPanel.jsf</welcome-file>
     </welcome-file-list>
 </web-app>
