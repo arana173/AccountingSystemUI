@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@^3/primeflex.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    </h:head>
+    <h:body>
+        <h:form>
+
+            <!--Navbar Start-->
+
+
+            <div class="card">
+                <div class="flex justify-content-between flex-wrap card-container purple-container">
+                    <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                        <p:commandButton icon="pi pi-align-justify" type="button" onclick="PF('sidebar1').show()" />
+                    </div>
+                    <div class="flex align-items-center justify-content-center font-bold text-white border-round m-2">
+                        <div class="ui-input-icon-left">
+                            <i class="pi pi-search" />
+                            <p:inputText placeholder="Search"  class="w-30rem" />
+                        </div>          
+                    </div>
+                    <div class="flex align-items-center justify-content-between font-bold text-white border-round m-2">
+                        <div class="inline">
+                            <p:badge value="2">
+                                <p:commandButton type="button" icon="pi pi-bell" styleClass="rounded-button ui-button-warning"/>
+                            </p:badge>
+                            <p:commandButton type="button" icon="pi pi-user" styleClass="rounded-button ui-button-info ml-2"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Navbar End-->
+
+            <!--Side Panel Start-->
+            <p:sidebar widgetVar="sidebar1">
+
+                <p:graphicImage height="50px" width="50px" value="/images/image.jpg" />
+
+                <div class="card m-2" >
+                    <!--<h5>Image</h5>-->
+                    <!--Logo--> 
+                    <p:avatar styleClass="mx-auto my-3" size="xlarge" shape="circle">
+                        <!--<div class="card-body" >-->
+                        <p:graphicImage height="50px" width="50px" value="/images/image.jpg" />    
+                        <!--</div>-->            
+                    </p:avatar>
+
+                    <p:outputLabel styleClass="mx-auto" value="admin"/>
+
+                    <div class="card">
+                        <p:panelMenu class="m-1">
+                            <p:submenu label="Users">
+                                <p:menuitem value="View Active Users" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-user"/>
+                            </p:submenu>
+
+                            <p:submenu label="Businesses">
+                                <p:menuitem value="View Active Businesses" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-user"/>
+
+                                <p:menuitem value="Verification Requests" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-verified"/>
+                            </p:submenu>
+
+                            <p:submenu label="Subscriptions">
+                                <p:menuitem value="View Subscriptions" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-eye"/>
+
+                                <p:menuitem value="Add Subscriptions" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+                            </p:submenu>
+
+                            <p:submenu label="Country">
+                                <p:menuitem value="View Active Countries" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-eye"/>
+
+                                <p:menuitem value="View Deleted Countries" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-eye"/>
+
+                                <p:menuitem value="Add Country" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+                            </p:submenu>
+
+                            <p:submenu label="Voucher Type">
+                                <p:menuitem value="View Voucher Types" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-eye"/>
+
+                                <p:menuitem value="Add Voucher Type" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+                            </p:submenu>
+
+                            <p:submenu label="Report Type">
+                                <p:menuitem value="View Report Types" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-eye"/>
+
+                                <p:menuitem value="Add Report Type" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+                            </p:submenu>
+
+                            <p:submenu label="Settings">
+                                <p:menuitem value="Profile" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-user"/>
+
+                                <p:menuitem value="Logout" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+
+                                <p:menuitem value="Display And Visualization" action="#{menuView.save}" ajax="false"
+                                            icon="pi pi-plus"/>
+                            </p:submenu>
+                        </p:panelMenu>
+                    </div>
+                </div>
+
+            </p:sidebar>
+            <!--Side Panel End-->
+        </h:form> 
+    </h:body>
+</html>
+

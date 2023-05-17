@@ -24,23 +24,17 @@ public class RestClient {
 
     private WebTarget webTarget;
     private Client client;
-    private static final String BASE_URI = "http://localhost:8090/";
+    private static final String BASE_URI = "http://localhost:8080/";
 
     public RestClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI);
     }
 
-    public <T> T getallUser(Class<T> responseType) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("admin/getallUsers");
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
-    }
-
-    public void sendMessage(Object requestEntity) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("contact/sendMessage");
-        resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    public <T> T sendMessage(Object requestEntity,Class<T> responseType) throws ClientErrorException {
+//        WebTarget resource = webTarget;
+//        resource = resource.path("contact/sendMessage");
+        return webTarget.path("contact/sendMessage").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON),responseType);
     }
 
     public <T> T getSubscription(Class<T> responseType) throws ClientErrorException {
@@ -55,6 +49,78 @@ public class RestClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    //Country Start 
+    //get all countries
+    public <T> T getAllCountries(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("country/getCountries");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    //Add Country
+    public <T> T addCountry(Object requestEntity,Class<T> responseType) throws ClientErrorException {
+       return webTarget.path("country/addCountry").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON),responseType);
+    }
+
+    //delete Country
+    public <T> T deleteCountry(String countryId,Class<T> responseType) throws ClientErrorException {
+      return webTarget.path(java.text.MessageFormat.format("country/toggleCountry/{0}", new Object[]{countryId})).request().delete(responseType);
+    }
+    
+    //Update Country
+    public <T> T updateCountry(Object requestEntity,String countryId,Class<T> responseType) throws ClientErrorException {
+       return webTarget.path(java.text.MessageFormat.format("country/updateCountry/{0}", new Object[]{countryId})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON),responseType);
+    }
+    //Country End
+    //Users Start
+    //Get All users
+    public <T> T getallUser(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("admin/getallUsers");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    //Users End
+    //Subscriptions Start
+    //get all subscription
+    public <T> T getAllSubscriptions(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("subscription/getSubscriptions");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    //Add Subscription
+    public void addSubscription(Object requestEntity) throws ClientErrorException {
+        webTarget.path("subscription/addSubscription").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    //delete Subscription
+    public void deleteSubscription(String countryId) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("subscription/deleteSubscription/{0}", new Object[]{countryId})).request().delete();
+    }
+    //Subscriptions End
+    
+        //Country Start 
+    //get all countries
+    public <T> T getAllReportTypes(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("reportType/getReportTypes");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    //Add Country
+    public void addReportType(Object requestEntity) throws ClientErrorException {
+        webTarget.path("reportType/addReportType").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    //delete Country
+    public void deleteReportType(String countryId) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("reportType/deleteReportType/{0}", new Object[]{countryId})).request().delete();
+    }
+    //Country End
+    
+    
+    
 //    public <T> T getUserByuName(Class<T> responseType, String name) throws ClientErrorException {
 //        WebTarget resource = webTarget;
 //        resource = resource.path(java.text.MessageFormat.format("getUserByName/{0}", new Object[]{name}));
