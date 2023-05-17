@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" href="../vendors/feather/feather.css"/>
@@ -120,7 +122,7 @@
             </nav>
             <!-- partial -->   
             <div class="container-fluid page-body-wrapper">
-                    
+
                 <ui:include src="../subPages/SettingPanel.xhtml"/>
                 <ui:include src="admin_sidebar.xhtml"/>
 
@@ -128,120 +130,112 @@
                     <div class="content-wrapper">
                         <div class="row">
 
-                            <f:view>
-                                <h:form>
-                                    <h1><h:outputText value="List"/></h1>
-                                    <h:dataTable value="#{user.users}" var="item" border="1">
+                            <h:form id="form">
+                                <!--Toolbar Start-->
+                                <p:toolbar>
+                                    <p:toolbarGroup>
+                                        <p:commandButton value="New" icon="pi pi-plus" oncomplete="PF('manageProductDialog').show()"
+                                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                                            <!--<p:resetInput target=":dialogs:manage-product-content" />-->
+                                        </p:commandButton>
+                                        <p:commandButton id="delete-products-button" action="#{manageData.deleteCountries()}"
+                                                         icon="pi pi-trash" value="#{manageData.getDeleteBtnMessage()}"
+                                                         styleClass="ui-button-danger" disabled="#{!manageData.hasSelectedCountry()}" update="@this">
+                                            <p:confirm header="Confirmation" message="Delete the selected products?"
+                                                       icon="pi pi-exclamation-triangle" />
+                                        </p:commandButton>
+                                    </p:toolbarGroup>
+                                    <p:toolbarGroup align="right">
+                                        <!--                                            <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download" />-->
+                                        <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                            <p:dataExporter type="pdf" target="dt-products" fileName="products" />
+                                        </p:commandButton>
+                                    </p:toolbarGroup>
+                                </p:toolbar>
+                                <!--Toolbar End-->  
 
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Avatar"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.avatar}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Address"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.address}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="City"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.city}"/>
-                                        </h:column>
+                                <!--Datatable Start-->
+                                <p:dataTable id="dt-products" widgetVar="dtProducts" var="voucher" value="#{manageData.DisplayVoucherType()}"
+                                             reflow="true" styleClass="products-table" selection="#{manageData.selectedCountries}"
+                                             rowKey="#{voucher.voucherTypeId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                    <f:facet name="header">
+                                        <div class="products-table-header">
+                                            <span style="font-weight: bold">Countries</span>
+                                        </div>
+                                    </f:facet>
 
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Dob"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.dob}">
-                                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                            </h:outputText>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="FirstName"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.firstName}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Gender"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.gender}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="IsActive"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.isActive}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="LastName"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.lastName}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Password"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.password}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="ContactNumber"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.contactNumber}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="State"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.state}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Title"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.title}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Email"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.email}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="UserName"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.userName}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="CountryId"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.countryId.countryName}"/>
-                                        </h:column>
-                                    </h:dataTable>
-                                </h:form>
-                            </f:view>
+                                    <p:ajax event="rowSelect" update=":form:delete-products-button" />
+                                    <p:ajax event="rowUnselect" update=":form:delete-products-button" />
+                                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button" />
+                                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button" />
+                                    <p:ajax event="toggleSelect" update=":form:delete-products-button" />
 
+                                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                                    <p:column headerText="Voucher TypeId" sortBy="#{voucher.voucherTypeId}" filterBy="#{voucher.voucherTypeId}">
+                                        <h:outputText value="#{voucher.voucherTypeId}" />
+                                    </p:column>
+
+                                    <p:column headerText="Active" sortBy="#{report.active}" filterBy="#{report.active}">
+                                        <h:outputText value="#{report.active}" />
+                                    </p:column>
+
+                                    <p:column exportable="false">
+                                        <p:commandButton icon="pi pi-pencil"
+                                                         oncomplete="PF('manageProductDialog').show()"
+                                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                            <f:setPropertyActionListener value="#{country}" target="#{manageData.selectedCountry}" />
+                                            <p:resetInput target=":dialogs:manage-product-content" />
+                                        </p:commandButton>
+                                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                                         process="@this"
+                                                         oncomplete="PF('deleteProductDialog').show()">
+                                            <f:setPropertyActionListener value="#{country}" target="#{manageData.selectedCountry}" />
+                                        </p:commandButton>
+                                    </p:column>
+
+                                </p:dataTable>
+                                <!--Datatable End-->
+
+                                <!--Add and update dialog Form Start-->
+
+                                <p:dialog header="Country Details" showEffect="fade" modal="true" widgetVar="manageProductDialog"
+                                          responsive="true">
+                                    <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                        <p:outputPanel rendered="#{not empty manageData.selectedCountry}">
+                                            <div class="field">
+                                                <p:outputLabel for="name">Name</p:outputLabel>
+                                                <p:inputText id="name" value="#{manageData.selectedCountry.countryName}" required="true" />
+                                            </div>
+                                        </p:outputPanel>
+                                    </p:outputPanel>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton value="Save" icon="pi pi-check" actionListener="#{manageData.saveCountry()}"
+                                                         update="manage-product-content" process="manage-product-content @this" />
+                                        <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                                         class="ui-button-secondary" type="button" />
+                                    </f:facet>
+                                </p:dialog>
+                                <!--Add and update dialog form End-->
+
+                                <!--Delete Confirm dialog start-->
+                                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                                 message="Delete the product?" header="Confirm" severity="warn">
+                                    <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{manageData.deleteSelectedCountry()}"
+                                                     process="@this" update=":form:delete-products-button"
+                                                     oncomplete="PF('deleteProductDialog').hide()" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                                     onclick="PF('deleteProductDialog').hide()" />
+                                </p:confirmDialog>
+                                <!--Delete Confirm dialog end-->
+
+                            </h:form>
 
                         </div>
                     </div>
                     <!-- content-wrapper ends -->
-                    <!-- partial:../../partials/_footer.html -->
-                    <footer class="footer">
-                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted  made with <i class="ti-heart text-danger ml-1"></i></span>
-                        </div>
-                    </footer>
-                    <!-- partial -->
+
                 </div>
                 <!-- main-panel ends -->
             </div>
@@ -249,12 +243,5 @@
         </div>
 
     </h:body>
-    <script src="../vendors/js/vendor.bundle.base.js"></script>
-
-    <script src="../js/off-canvas.js"></script>
-    <script src="../js/hoverable-collapse.js"></script>
-    <script src="../template.js"></script>
-    <script src="../js/settings.js"></script>
-    <script src="../js/todolist.js"></script>
 </html>
 
