@@ -50,6 +50,7 @@ public class SourceDocumentType implements Serializable {
     private String title;
 
     public SourceDocumentType() {
+        title ="";
     }
 
     public SourceDocumentType(String sourceDocumentTypeId) {

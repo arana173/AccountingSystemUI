@@ -39,7 +39,11 @@ public class registration_bean {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-
     }
 
+    public void displaySel(String data)
+    {
+        System.out.println("Data is:"  + data);
+    }
+    
 }

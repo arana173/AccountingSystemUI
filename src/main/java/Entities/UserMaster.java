@@ -5,6 +5,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,13 +53,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "UserMaster.findByUserName", query = "SELECT u FROM UserMaster u WHERE u.userName = :userName")})
 public class UserMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "user_id")
-    private String userId;
     @Size(max = 500)
     @Column(name = "avatar")
     private String avatar;
@@ -66,12 +62,6 @@ public class UserMaster implements Serializable {
     @Size(max = 150)
     @Column(name = "city")
     private String city;
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Column(name = "dob")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dob;
     @Size(max = 100)
     @Column(name = "first_name")
     private String firstName;
@@ -85,9 +75,6 @@ public class UserMaster implements Serializable {
     @Size(max = 20)
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
-    @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
     @Size(max = 100)
     @Column(name = "last_name")
     private String lastName;
@@ -110,6 +97,29 @@ public class UserMaster implements Serializable {
     @Size(max = 100)
     @Column(name = "user_name")
     private String userName;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<DepartmentMaster> departmentMasterCollection;
+    @OneToMany(mappedBy = "lastModifiedBy")
+    private Collection<DepartmentMaster> departmentMasterCollection1;
+    @OneToOne(mappedBy = "userId")
+    private OwnerMaster ownerMaster;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "user_id")
+    private String userId;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Column(name = "dob")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dob;
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
     
     @JoinColumn(name = "country_id", referencedColumnName = "country_id")
     @ManyToOne(
@@ -137,29 +147,6 @@ public class UserMaster implements Serializable {
         this.userId = userId;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -185,13 +172,6 @@ public class UserMaster implements Serializable {
         this.firstName = firstName;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
 
     public boolean getIsActive() {
         return isActive;
@@ -225,13 +205,6 @@ public class UserMaster implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getPhoneNo() {
         return phoneNo;
@@ -242,29 +215,6 @@ public class UserMaster implements Serializable {
     }
 
   
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getUserName() {
         return userName;
@@ -307,6 +257,100 @@ public class UserMaster implements Serializable {
     @Override
     public String toString() {
         return "Entity.UserMaster[ userId=" + userId + " ]";
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+   
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+ 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+ 
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+   
+    public Collection<DepartmentMaster> getDepartmentMasterCollection() {
+        return departmentMasterCollection;
+    }
+
+    public void setDepartmentMasterCollection(Collection<DepartmentMaster> departmentMasterCollection) {
+        this.departmentMasterCollection = departmentMasterCollection;
+    }
+
+    public Collection<DepartmentMaster> getDepartmentMasterCollection1() {   
+        return departmentMasterCollection1;
+    }
+
+    public void setDepartmentMasterCollection1(Collection<DepartmentMaster> departmentMasterCollection1) {
+        this.departmentMasterCollection1 = departmentMasterCollection1;
+    }
+
+    public OwnerMaster getOwnerMaster() {
+        return ownerMaster;
+    }
+
+    public void setOwnerMaster(OwnerMaster ownerMaster) {
+        this.ownerMaster = ownerMaster;
     }
     
 }

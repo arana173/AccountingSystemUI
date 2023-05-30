@@ -36,13 +36,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Country.findByLastModifiedDate", query = "SELECT c FROM Country c WHERE c.lastModifiedDate = :lastModifiedDate")})
 public class Country implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "country_id")
-    private String countryId;
     @Size(max = 150)
     @Column(name = "country_name")
     private String countryName;
@@ -53,6 +46,14 @@ public class Country implements Serializable {
     @Size(max = 20)
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "country_id")
+    private String countryId;
     @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
@@ -144,5 +145,6 @@ public class Country implements Serializable {
     public String toString() {
         return "Entity.Country[ countryId=" + countryId + " ]";
     }
+
     
 }
