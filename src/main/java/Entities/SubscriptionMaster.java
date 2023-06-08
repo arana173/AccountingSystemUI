@@ -40,13 +40,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "SubscriptionMaster.findByDescription", query = "SELECT s FROM SubscriptionMaster s WHERE s.description = :description")})
 public class SubscriptionMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "subscription_id")
-    private String subscriptionId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "charges")
@@ -61,20 +54,28 @@ public class SubscriptionMaster implements Serializable {
     @Size(max = 500)
     @Column(name = "features")
     private String features;
-    @Column(name = "is_active")
-    private Boolean isActive;
     @Size(max = 20)
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
-    @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
     @Size(max = 200)
     @Column(name = "title")
     private String title;
     @Size(max = 500)
     @Column(name = "description")
     private String description;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "subscription_id")
+    private String subscriptionId;
+    @Column(name = "is_active")
+    private Boolean isActive;
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
     @OneToMany(mappedBy = "subscriptionId")
     private Collection<OwnerMaster> ownerMasterCollection;
 
@@ -99,21 +100,6 @@ public class SubscriptionMaster implements Serializable {
         this.subscriptionId = subscriptionId;
     }
 
-    public double getCharges() {
-        return charges;
-    }
-
-    public void setCharges(double charges) {
-        this.charges = charges;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
 
     public String getDurationType() {
         return durationType;
@@ -123,13 +109,6 @@ public class SubscriptionMaster implements Serializable {
         this.durationType = durationType;
     }
 
-    public String getFeatures() {
-        return features;
-    }
-
-    public void setFeatures(String features) {
-        this.features = features;
-    }
 
     public Boolean getIsActive() {
         return isActive;
@@ -155,21 +134,6 @@ public class SubscriptionMaster implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Collection<OwnerMaster> getOwnerMasterCollection() {
         return ownerMasterCollection;
@@ -202,6 +166,50 @@ public class SubscriptionMaster implements Serializable {
     @Override
     public String toString() {
         return "Entities.SubscriptionMaster[ subscriptionId=" + subscriptionId + " ]";
+    }
+
+    public double getCharges() {
+        return charges;
+    }
+
+    public void setCharges(double charges) {
+        this.charges = charges;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+  
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+ 
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

@@ -31,6 +31,13 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "OwnerMaster.findByOwnerId", query = "SELECT o FROM OwnerMaster o WHERE o.ownerId = :ownerId")})
 public class OwnerMaster implements Serializable {
 
+    @OneToMany(mappedBy = "lastModifiedBy")
+    private Collection<RoleMaster> roleMasterCollection;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<RoleMaster> roleMasterCollection1;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<EmployeeMaster> employeeMasterCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -159,6 +166,30 @@ public class OwnerMaster implements Serializable {
     @Override
     public String toString() {
         return "Entities.OwnerMaster[ ownerId=" + ownerId + " ]";
+    }
+
+    public Collection<RoleMaster> getRoleMasterCollection() {
+        return roleMasterCollection;
+    }
+
+    public void setRoleMasterCollection(Collection<RoleMaster> roleMasterCollection) {
+        this.roleMasterCollection = roleMasterCollection;
+    }
+
+    public Collection<RoleMaster> getRoleMasterCollection1() {
+        return roleMasterCollection1;
+    }
+
+    public void setRoleMasterCollection1(Collection<RoleMaster> roleMasterCollection1) {
+        this.roleMasterCollection1 = roleMasterCollection1;
+    }
+
+    public Collection<EmployeeMaster> getEmployeeMasterCollection() {
+        return employeeMasterCollection;
+    }
+
+    public void setEmployeeMasterCollection(Collection<EmployeeMaster> employeeMasterCollection) {
+        this.employeeMasterCollection = employeeMasterCollection;
     }
     
 }

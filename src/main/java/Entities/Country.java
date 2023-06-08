@@ -146,5 +146,5 @@ public class Country implements Serializable {
         return "Entity.Country[ countryId=" + countryId + " ]";
     }
 
-    
+  
 }

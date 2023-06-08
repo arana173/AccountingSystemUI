@@ -3,20 +3,168 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" href="../vendors/feather/feather.css"/>
         <link rel="stylesheet" href="../vendors/ti-icons/css/themify-icons.css"/>
-        <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css"/>      
+        <link rel="stylesheet" href="../vendors/css/vendor.bundle.base.css"/>
         <link rel="stylesheet" href="../css/vertical-layout-light/style.css"/>
         <link rel="shortcut icon" href="../images/favicon.png" />
+
+        <style>
+            body .ui-panelgrid .ui-panelgrid-cell{
+                padding: 0 !important;
+            }
+        </style>
+
     </h:head>
     <h:body>
-                   
-         
+        <div class="container-scroller">
+            <ui:include src="../subPages/sidePanel.xhtml"/>
+            <div class="">
+                <ui:include src="../subPages/SettingPanel.xhtml"/>
+
+                <div>          
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <h:form id="form">
+                                Toolbar Start
+                                <p:growl id="messages" showDetail="true" />
+                                <p:toolbar>
+                                    <p:toolbarGroup>
+
+                                    </p:toolbarGroup>
+                                    <p:toolbarGroup align="right">
+                                        <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download" />
+
+                                        <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                            <p:dataExporter type="pdf" target="dt-products" fileName="products" />
+                                        </p:commandButton>
+                                    </p:toolbarGroup>
+                                </p:toolbar>
+                                <!--                                Toolbar End  
+                                
+                                                                Datatable Start-->
+                                <div style="margin: 60px;" >
+                                    <div id="contxt">
+                                        <p:contextMenu for="products">
+                                            <p:menuitem value="View Business" icon="pi pi-search" update="productDetail"
+                                                        oncomplete="PF('productDialog').show()"/>
+<!--                                            <p:menuitem value="View Business" icon="pi pi-search" action="#{manageData.openLevel1WithFlash}"  >
+    <p:ajax event="dialogReturn" listener="#{manageData.onReturnFromLevel1}"/>
+</p:menuitem>-->
+                                            <!--                                            <p:menuitem value="View Branch" icon="pi pi-search" update="productDetail"
+                                                                                                    oncomplete="PF('productDialog').show()"/>-->
+                                            <p:menuitem value="Delete"  icon="pi pi-times"
+                                                        />
+
+                                        </p:contextMenu>
+                                        <p:dialog header="Department Info" widgetVar="productDialog" modal="true" showEffect="fade"
+                                                  hideEffect="fade" resizable="false">
+                                            <p:outputPanel id="productDetail" style="text-align:center;">
+
+                                                <h2> <h:outputText value="#{manageData.selectedDepartment.departmentName}" />  </h2>
+                                                <div class="container">
+                                                    <div class="card border-0">
+
+                                                        <p:tabView>
+                                                            <p:tab title="Show Branch">
+
+                                                                <div class="product-name">#{manageData.selectedDepartment.branch.branchId}</div>
+                                                                <div class="product-description">#{manageData.selectedDepartment.branch.branchName}</div>
+
+                                                            </p:tab>
+                                                            <p:tab title="Show Business">
+                                                                <div class="product-name">#{manageData.selectedDepartment.branch.business.businessTitle}</div>
+                                                                <div class="product-description">#{manageData.selectedDepartment.branch.business.businessAddress}</div>
+                                                            </p:tab>
+
+                                                        </p:tabView>
+                                                    </div>
+                                                    <p:commandButton value="Show All Branch" />&nbsp;
+                                                    <p:commandButton value="Show All Business" action="#{manageData.showDataTable()}"/>
+
+                                                </div>
+                                            </p:outputPanel>
+                                        </p:dialog>
+                                        <!-- -->
+
+                                        <p:dataTable id="products" widgetVar="dtProducts" var="bussiness" value="#{manageData.DisplayDepartmentsData()}"
+                                                     reflow="true" styleClass="products-table"   selection="#{manageData.selectedDepartment}" selectionMode="single"
+                                                     onRowClick=""  rowKey="#{bussiness.departmentId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                            <f:facet name="header">
+                                                <div class="products-table-header">
+                                                    <span style="font-weight: bold">Department</span>
+                                                </div>
+                                            </f:facet>
+
+                                            <p:column style="width:2rem">
+                                                <p:rowToggler/>
+                                            </p:column>
+                                            <p:column headerText="Department Id" sortBy="#{bussiness.departmentId}" filterBy="#{bussiness.departmentId}">
+                                                <h:outputText value="#{bussiness.departmentId}" />
+                                            </p:column>
+
+                                            <p:column id="dt-context" headerText="Department Title" sortBy="#{bussiness.departmentName}" filterBy="#{bussiness.departmentName}">
+                                                <h:outputText value="#{bussiness.departmentName}" />
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </div>
+
+
+
+
+                                    <p:dataTable rendered="#{manageData.showTable}" id="dt-business"  widgetVar="dtProducts" var="bussiness" value="#{manageData.DiplayAllBussiness()}"
+                                                  reflow="true" styleClass="products-table"   selection="#{manageData.selectedBussines}" selectionMode="single"
+                                                  onRowClick=""  rowKey="#{bussiness.businessId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                        <f:facet name="header">
+                                            <div class="products-table-header">
+                                                <span style="font-weight: bold">Business</span>
+                                            </div>
+                                        </f:facet>
+
+                                        <p:column style="width:2rem">
+                                            <p:rowToggler/>
+                                        </p:column>
+                                        <p:column headerText="bussiness Id" sortBy="#{bussiness.businessId}" filterBy="#{bussiness.departmentId}">
+                                            <h:outputText value="#{bussiness.businessTitle}" />
+                                        </p:column>
+
+                                        <p:column id="dt-context" headerText="bussiness Title" sortBy="#{bussiness.businessTitle}" filterBy="#{bussiness.departmentName}">
+                                            <h:outputText value="#{bussiness.businessTitle}" />
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </div>
+                            </h:form>
+                        
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
     </h:body>
-  
+
+
+
 </html>
 

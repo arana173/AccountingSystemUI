@@ -4,9 +4,11 @@
  */
 package JSFCdiBeans;
 
+import Entities.BusinessMaster;
 import Entities.Contact;
 import Entities.Country;
 import Entities.DepartmentMaster;
+import Entities.EmployeeMaster;
 import Entities.ReportType;
 import Entities.SourceDocumentType;
 import Entities.Subscription;
@@ -17,20 +19,21 @@ import RestClient.RestClient;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.PartialViewContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -83,6 +86,75 @@ public class managedBean implements Serializable {
     GenericType<responseClass<List<DepartmentMaster>>> gen_department_masterType;
     responseClass<List<DepartmentMaster>> res_department_master;
     DepartmentMaster save_deparDepartmentMaster;
+    DepartmentMaster selectedDepartment;
+
+    //Display Employee
+    List<EmployeeMaster> employee_List;
+    GenericType<responseClass<List<EmployeeMaster>>> gen_EmployeeMaster;
+    responseClass<List<EmployeeMaster>> res_Employee_master;
+    EmployeeMaster save_EmployeeMaster;
+
+    //Display Business
+    List<BusinessMaster> businessMasters_list;
+    GenericType<responseClass<List<BusinessMaster>>> gen_BusinessMaster;
+    responseClass<List<BusinessMaster>> res_Business_master;
+    BusinessMaster save_BusinessMaster;
+    BusinessMaster selectedBussines;
+
+    public DepartmentMaster getSelectedDepartment() {
+        return selectedDepartment;
+    }
+
+    public void setSelectedDepartment(DepartmentMaster selectedDepartment) {
+        this.selectedDepartment = selectedDepartment;
+    }
+
+    public BusinessMaster getSelectedBussines() {
+        return selectedBussines;
+    }
+
+    public void setSelectedBussines(BusinessMaster selectedBussines) {
+        System.out.println(" Selected Business Is  " + selectedBussines.getBusinessTitle());
+
+        this.selectedBussines = selectedBussines;
+    }
+
+    public List<DepartmentMaster> GetDepartmentByName() {
+
+        return null;
+    }
+
+    public List<BusinessMaster> getBusinessMasters_list() {
+        return businessMasters_list;
+    }
+
+    public void setBusinessMasters_list(List<BusinessMaster> businessMasters_list) {
+        this.businessMasters_list = businessMasters_list;
+    }
+
+    public BusinessMaster getSave_BusinessMaster() {
+        return save_BusinessMaster;
+    }
+
+    public void setSave_BusinessMaster(BusinessMaster save_BusinessMaster) {
+        this.save_BusinessMaster = save_BusinessMaster;
+    }
+
+    public List<EmployeeMaster> getEmployee_List() {
+        return employee_List;
+    }
+
+    public void setEmployee_List(List<EmployeeMaster> employee_List) {
+        this.employee_List = employee_List;
+    }
+
+    public EmployeeMaster getSave_EmployeeMaster() {
+        return save_EmployeeMaster;
+    }
+
+    public void setSave_EmployeeMaster(EmployeeMaster save_EmployeeMaster) {
+        this.save_EmployeeMaster = save_EmployeeMaster;
+    }
 
     public List<DepartmentMaster> getDepartment_List() {
         return department_List;
@@ -222,6 +294,19 @@ public class managedBean implements Serializable {
         };
         res_department_master = new responseClass<List<DepartmentMaster>>();
         save_deparDepartmentMaster = new DepartmentMaster();
+
+        employee_List = new ArrayList<EmployeeMaster>();
+        gen_EmployeeMaster = new GenericType<responseClass<List<EmployeeMaster>>>() {
+        };
+        res_Employee_master = new responseClass<List<EmployeeMaster>>();
+        save_EmployeeMaster = new EmployeeMaster();
+
+        //Display Business
+        businessMasters_list = new ArrayList<BusinessMaster>();
+        gen_BusinessMaster = new GenericType<responseClass<List<BusinessMaster>>>() {
+        };
+        res_Business_master = new responseClass<List<BusinessMaster>>();
+        save_BusinessMaster = new BusinessMaster();
 
     }
 
@@ -551,14 +636,61 @@ public class managedBean implements Serializable {
         response = client.getallDepartments(Response.class);
         res_department_master = response.readEntity(gen_department_masterType);
         department_List = res_department_master.getData();
-        
-        for(int i =0;i<department_List.size();i++)
-        {
-            System.out.println(department_List.get(i).getBranch().getBranchId());
-        }
-         
-        
-      
+
+//        for(int i =0;i<department_List.size();i++)
+//        {
+//            System.out.println(department_List.get(i).getBranch().getBranchId());
+//        }
         return department_List;
     }
+
+    public List<EmployeeMaster> DisplayAllEmployee() {
+        response = client.getAllEmployee(Response.class);
+        res_Employee_master = response.readEntity(gen_EmployeeMaster);
+        employee_List = res_Employee_master.getData();
+
+//        for (int i = 0; i < department_List.size(); i++) {
+//            System.out.println(department_List.get(i).getBranch().getBranchId());
+//        }
+        return employee_List;
+    }
+
+    public List<BusinessMaster> DiplayAllBussiness() {
+        response = client.getallBusinessMaster(Response.class);
+        res_Business_master = response.readEntity(gen_BusinessMaster);
+        businessMasters_list = res_Business_master.getData();
+
+        return businessMasters_list;
+    }
+
+    private boolean showTable;
+
+    public boolean isShowTable() {
+        return showTable;
+    }
+
+    public void setShowTable(boolean showTable) {
+        this.showTable = showTable;
+    }
+
+    public void showDataTable() {
+        showTable = true;
+    }
+
+//    
+//    
+//    public void openLevel1() {
+//        Map<String, Object> options = new HashMap<String, Object>();
+//        options.put("modal", true);
+//        PrimeFaces.current().dialog().openDynamic("level1", options, null);
+//    }
+//
+//    public void openLevel1WithFlash() {
+//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("param1", LocalDateTime.now());
+//        openLevel1();
+//    }
+//
+//    public void onReturnFromLevel1(SelectEvent event) {
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Data Returned", event.getObject().toString()));
+//    }
 }

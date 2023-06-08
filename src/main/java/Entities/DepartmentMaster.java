@@ -5,6 +5,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +38,21 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DepartmentMaster.findByLastModifiedDate", query = "SELECT d FROM DepartmentMaster d WHERE d.lastModifiedDate = :lastModifiedDate")})
 public class DepartmentMaster implements Serializable {
 
+    @Size(max = 150)
+    @Column(name = "department_name")
+    private String departmentName;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "is_active")
+    private boolean isActive;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne
+    private UserMaster userId;
+    @OneToMany(mappedBy = "departmentId")
+    private Collection<RoleMaster> roleMasterCollection;
+    @OneToMany(mappedBy = "departmentId")
+    private Collection<EmployeeMaster> employeeMasterCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,13 +63,6 @@ public class DepartmentMaster implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Size(max = 150)
-    @Column(name = "department_name")
-    private String departmentName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "is_active")
-    private boolean isActive;
     @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
@@ -176,6 +186,31 @@ public class DepartmentMaster implements Serializable {
     @Override
     public String toString() {
         return "Entities.DepartmentMaster[ departmentId=" + departmentId + " ]";
+    }
+
+ 
+    public UserMaster getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UserMaster userId) {
+        this.userId = userId;
+    }
+
+    public Collection<RoleMaster> getRoleMasterCollection() {
+        return roleMasterCollection;
+    }
+
+    public void setRoleMasterCollection(Collection<RoleMaster> roleMasterCollection) {
+        this.roleMasterCollection = roleMasterCollection;
+    }
+
+    public Collection<EmployeeMaster> getEmployeeMasterCollection() {
+        return employeeMasterCollection;
+    }
+
+    public void setEmployeeMasterCollection(Collection<EmployeeMaster> employeeMasterCollection) {
+        this.employeeMasterCollection = employeeMasterCollection;
     }
     
 }

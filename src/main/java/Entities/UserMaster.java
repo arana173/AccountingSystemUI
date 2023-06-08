@@ -91,12 +91,19 @@ public class UserMaster implements Serializable {
     @Column(name = "title")
     private String title;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 50)
     @Column(name = "email")
     private String email;
     @Size(max = 100)
     @Column(name = "user_name")
     private String userName;
+    @OneToMany(mappedBy = "parentId")
+    private Collection<EmployeeMaster> employeeMasterCollection;
+    @OneToMany(mappedBy = "userId")
+    private Collection<EmployeeMaster> employeeMasterCollection1;
+    @OneToMany(mappedBy = "lastModifiedBy")
+    private Collection<EmployeeMaster> employeeMasterCollection2;
     @OneToMany(mappedBy = "createdBy")
     private Collection<DepartmentMaster> departmentMasterCollection;
     @OneToMany(mappedBy = "lastModifiedBy")
@@ -259,6 +266,32 @@ public class UserMaster implements Serializable {
         return "Entity.UserMaster[ userId=" + userId + " ]";
     }
 
+
+   
+    public Collection<DepartmentMaster> getDepartmentMasterCollection() {
+        return departmentMasterCollection;
+    }
+
+    public void setDepartmentMasterCollection(Collection<DepartmentMaster> departmentMasterCollection) {
+        this.departmentMasterCollection = departmentMasterCollection;
+    }
+
+    public Collection<DepartmentMaster> getDepartmentMasterCollection1() {   
+        return departmentMasterCollection1;
+    }
+
+    public void setDepartmentMasterCollection1(Collection<DepartmentMaster> departmentMasterCollection1) {
+        this.departmentMasterCollection1 = departmentMasterCollection1;
+    }
+
+    public OwnerMaster getOwnerMaster() {
+        return ownerMaster;
+    }
+
+    public void setOwnerMaster(OwnerMaster ownerMaster) {
+        this.ownerMaster = ownerMaster;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -283,7 +316,6 @@ public class UserMaster implements Serializable {
         this.city = city;
     }
 
-   
 
     public String getGender() {
         return gender;
@@ -293,7 +325,7 @@ public class UserMaster implements Serializable {
         this.gender = gender;
     }
 
- 
+   
     public String getPassword() {
         return password;
     }
@@ -302,7 +334,7 @@ public class UserMaster implements Serializable {
         this.password = password;
     }
 
- 
+   
 
     public String getState() {
         return state;
@@ -328,29 +360,29 @@ public class UserMaster implements Serializable {
         this.email = email;
     }
 
-   
-    public Collection<DepartmentMaster> getDepartmentMasterCollection() {
-        return departmentMasterCollection;
+ 
+    public Collection<EmployeeMaster> getEmployeeMasterCollection() {
+        return employeeMasterCollection;
     }
 
-    public void setDepartmentMasterCollection(Collection<DepartmentMaster> departmentMasterCollection) {
-        this.departmentMasterCollection = departmentMasterCollection;
+    public void setEmployeeMasterCollection(Collection<EmployeeMaster> employeeMasterCollection) {
+        this.employeeMasterCollection = employeeMasterCollection;
     }
 
-    public Collection<DepartmentMaster> getDepartmentMasterCollection1() {   
-        return departmentMasterCollection1;
+    public Collection<EmployeeMaster> getEmployeeMasterCollection1() {
+        return employeeMasterCollection1;
     }
 
-    public void setDepartmentMasterCollection1(Collection<DepartmentMaster> departmentMasterCollection1) {
-        this.departmentMasterCollection1 = departmentMasterCollection1;
+    public void setEmployeeMasterCollection1(Collection<EmployeeMaster> employeeMasterCollection1) {
+        this.employeeMasterCollection1 = employeeMasterCollection1;
     }
 
-    public OwnerMaster getOwnerMaster() {
-        return ownerMaster;
+    public Collection<EmployeeMaster> getEmployeeMasterCollection2() {
+        return employeeMasterCollection2;
     }
 
-    public void setOwnerMaster(OwnerMaster ownerMaster) {
-        this.ownerMaster = ownerMaster;
+    public void setEmployeeMasterCollection2(Collection<EmployeeMaster> employeeMasterCollection2) {
+        this.employeeMasterCollection2 = employeeMasterCollection2;
     }
     
 }

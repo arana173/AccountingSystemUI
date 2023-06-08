@@ -39,13 +39,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "BranchMaster.findByLastModifiedDate", query = "SELECT b FROM BranchMaster b WHERE b.lastModifiedDate = :lastModifiedDate")})
 public class BranchMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "branch_id")
-    private String branchId;
     @Size(max = 700)
     @Column(name = "address")
     private String address;
@@ -54,14 +47,22 @@ public class BranchMaster implements Serializable {
     private String branchName;
     @Size(max = 10)
     @Column(name = "contact_number")
-    private String contactNo;
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    private String contactNumber;
     @Basic(optional = false)
     @NotNull
     @Column(name = "is_active")
     private boolean isActive;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "branch_id")
+    private String branchId;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
     @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
@@ -97,13 +98,6 @@ public class BranchMaster implements Serializable {
         this.branchId = branchId;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getBranchName() {
         return branchName;
@@ -114,12 +108,22 @@ public class BranchMaster implements Serializable {
     }
 
     public String getContactNumber() {
-        return contactNo;
+        return contactNumber;
     }
 
     public void setContactNumber(String contactNumber) {
-        this.contactNo = contactNumber;
+        this.contactNumber = contactNumber;
     }
+
+    public BusinessMaster getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(BusinessMaster business) {
+        this.business = business;
+    }
+
+  
 
     public Date getCreatedDate() {
         return createdDate;
@@ -201,5 +205,14 @@ public class BranchMaster implements Serializable {
     public String toString() {
         return "Entities.BranchMaster[ branchId=" + branchId + " ]";
     }
-    
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+   
 }

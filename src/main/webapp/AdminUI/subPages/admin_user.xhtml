@@ -49,9 +49,9 @@
 
                                 <!--Datatable Start-->
                                 <div style="margin: 60px;" >
-                                    <p:dataTable id="dt-products" widgetVar="dtProducts" var="usermaster" value="#{manageData.DisplayDepartmentsData()}"
+                                    <p:dataTable id="dt-products" widgetVar="dtProducts" var="usermaster" value="#{manageData.DisplayAllEmployee()}"
                                                  reflow="true" styleClass="products-table" 
-                                                 onRowClick=""  rowKey="#{usermaster.ownerId.ownerId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                                 onRowClick=""  rowKey="#{usermaster.user.userId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
                                         <f:facet name="header">
                                             <div class="products-table-header">
                                                 <span style="font-weight: bold">Users</span>
@@ -61,8 +61,8 @@
                                         <p:column style="width:2rem">
                                             <p:rowToggler/>
                                         </p:column>
-                                        <p:column headerText="User ID" sortBy="#{usermaster.ownerId.userId.userId}" filterBy="#{usermaster.ownerId.userId.userId}">
-                                            <h:outputText value="#{usermaster.ownerId.userId}" />
+                                        <p:column headerText="User ID" sortBy="#{usermaster.user.userId}" filterBy="#{usermaster.user.userId}">
+                                            <h:outputText value="#{usermaster.user.userId}" />
                                         </p:column>
 
                                         <p:column headerText="Avtar" >
@@ -76,7 +76,7 @@
                                                     <div class="product-list-detail">
 
                                                         <div class="card" style="border: none;">
-                                                            <h5 class="m-2">  <h:outputText value="#{usermaster.userName}" /></h5>
+                                                            <h5 class="m-2">  <h:outputText value="#{usermaster.user.userName}" /></h5>
                                                             <p:tabView>
                                                                 <p:tab title="Personal Details" >
                                                                     <p:panelGrid columns="2"
@@ -87,20 +87,20 @@
 
                                                                         <h:outputText value="Firstname :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.firstName}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.firstName}" class="p-0"/>
 
                                                                         <h:outputText value="Lastname :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.lastName}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.lastName}" class="p-0"/>
 
 
                                                                         <h:outputText value="Date Of Birth :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.dob}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.dob}" class="p-0"/>
 
                                                                         <h:outputText value="Gender :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.gender}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.gender}" class="p-0"/>
 
 
 
@@ -116,20 +116,20 @@
                                                                                  style="border:0px none;">
                                                                         <h:outputText value="Address :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.address}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.address}" class="p-0"/>
 
                                                                         <h:outputText value="city :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.city}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.city}" class="p-0"/>
 
 
                                                                         <h:outputText value="State :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.state}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.state}" class="p-0"/>
 
                                                                         <h:outputText value="country :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.country.countryName}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.country.countryName}" class="p-0"/>
 
 
 
@@ -146,11 +146,11 @@
                                                                                  style="border:0px none;">
                                                                         <h:outputText value="Email :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.email}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.email}" class="p-0"/>
 
                                                                         <h:outputText value="Contact No :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.phoneNo}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.phoneNo}" class="p-0"/>
                                                                     </p:panelGrid>
                                                                 </p:tab>
                                                                 <p:tab title="Comapny Detail">
@@ -161,7 +161,19 @@
                                                                                  style="border:0px none;">
                                                                         <h:outputText value="Title :" class="p-0" style="font: initial;
                                                                                       font-size: large;"/>
-                                                                        <p:outputLabel value="#{usermaster.title}" class="p-0"/>
+                                                                        <p:outputLabel value="#{usermaster.user.title}" class="p-0"/>
+
+                                                                        <h:outputText value="Bussiness :" class="p-0" style="font: initial;
+                                                                                      font-size: large;"/>
+                                                                        <p:outputLabel value="#{usermaster.department.branch.business.businessTitle}" class="p-0"/>
+
+                                                                        <h:outputText value="Branch :" class="p-0" style="font: initial;
+                                                                                      font-size: large;"/>
+                                                                        <p:outputLabel value="#{usermaster.department.branch.branchName}" class="p-0"/>
+
+                                                                        <h:outputText value="Department :" class="p-0" style="font: initial;
+                                                                                      font-size: large;"/>
+                                                                        <p:outputLabel value="#{usermaster.department.departmentName}" class="p-0"/>
 
 
                                                                     </p:panelGrid>

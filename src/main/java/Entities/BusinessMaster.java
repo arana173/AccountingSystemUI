@@ -47,13 +47,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "BusinessMaster.findByRegistrationId", query = "SELECT b FROM BusinessMaster b WHERE b.registrationId = :registrationId")})
 public class BusinessMaster implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "business_id")
-    private String businessId;
     @Size(max = 100)
     @Column(name = "authorized_name")
     private String authorizedName;
@@ -81,23 +74,30 @@ public class BusinessMaster implements Serializable {
     @Size(max = 1000)
     @Column(name = "certification")
     private String certification;
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "is_active")
     private boolean isActive;
-    @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
     @Size(max = 20)
     @Column(name = "registration_id")
     private String registrationId;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "business_id")
+    private String businessId;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Column(name = "last_modified_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
     @JoinColumn(name = "created_by", referencedColumnName = "owner_id")
     @ManyToOne
     private OwnerMaster createdBy;
@@ -154,13 +154,6 @@ public class BusinessMaster implements Serializable {
         this.authorizedSignatureType = authorizedSignatureType;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     public String getAvatarContentType() {
         return avatarContentType;
@@ -194,13 +187,6 @@ public class BusinessMaster implements Serializable {
         this.businessType = businessType;
     }
 
-    public String getCertification() {
-        return certification;
-    }
-
-    public void setCertification(String certification) {
-        this.certification = certification;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -210,13 +196,6 @@ public class BusinessMaster implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public boolean getIsActive() {
         return isActive;
@@ -298,5 +277,23 @@ public class BusinessMaster implements Serializable {
     public String toString() {
         return "Entities.BusinessMaster[ businessId=" + businessId + " ]";
     }
+
+ 
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     
 }
