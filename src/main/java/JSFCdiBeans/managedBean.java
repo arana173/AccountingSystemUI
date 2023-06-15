@@ -4,6 +4,7 @@
  */
 package JSFCdiBeans;
 
+import Entities.BranchMaster;
 import Entities.BusinessMaster;
 import Entities.Contact;
 import Entities.Country;
@@ -13,6 +14,7 @@ import Entities.ReportType;
 import Entities.SourceDocumentType;
 import Entities.Subscription;
 import Entities.UserMaster;
+import org.primefaces.context.PrimeRequestContext;
 import Entities.VoucherType;
 import HelperClasses.responseClass;
 import RestClient.RestClient;
@@ -52,11 +54,6 @@ public class managedBean implements Serializable {
 
     //manages contact/feedback
     Contact contact;
-
-    //shows subscriptions
-    List<Subscription> subscriptions;
-    GenericType<List<Subscription>> genSubscriptionList;
-    List<String> features;
 
     //Display Users
     List<UserMaster> users;
@@ -99,7 +96,18 @@ public class managedBean implements Serializable {
     GenericType<responseClass<List<BusinessMaster>>> gen_BusinessMaster;
     responseClass<List<BusinessMaster>> res_Business_master;
     BusinessMaster save_BusinessMaster;
-    BusinessMaster selectedBussines;
+//    BusinessMaster selectedBussines;
+
+    List<BranchMaster> branchMasters_list;
+    GenericType<responseClass<List<BranchMaster>>> gen_BranchMaster;
+    responseClass<List<BranchMaster>> res_Branch_master;
+    BranchMaster save_BranchMaster;
+//    BusinessMaster selectedBussines;
+
+    List<Subscription> subscriptions_List;
+    GenericType<responseClass<List<Subscription>>> gen_Subscription;
+    responseClass<List<Subscription>> res_Subscription;
+    Subscription save_Subscription;
 
     public DepartmentMaster getSelectedDepartment() {
         return selectedDepartment;
@@ -107,16 +115,7 @@ public class managedBean implements Serializable {
 
     public void setSelectedDepartment(DepartmentMaster selectedDepartment) {
         this.selectedDepartment = selectedDepartment;
-    }
 
-    public BusinessMaster getSelectedBussines() {
-        return selectedBussines;
-    }
-
-    public void setSelectedBussines(BusinessMaster selectedBussines) {
-        System.out.println(" Selected Business Is  " + selectedBussines.getBusinessTitle());
-
-        this.selectedBussines = selectedBussines;
     }
 
     public List<DepartmentMaster> GetDepartmentByName() {
@@ -243,8 +242,6 @@ public class managedBean implements Serializable {
     public managedBean() {
         contact = new Contact();
         client = new RestClient();
-        genSubscriptionList = new GenericType<List<Subscription>>() {
-        };
 
         //Response class
         responseCls = new responseClass<Boolean>();
@@ -256,10 +253,6 @@ public class managedBean implements Serializable {
         genUserList = new GenericType<responseClass<List<UserMaster>>>() {
         };
         userres = new responseClass<List<UserMaster>>();
-
-        //Subscription
-        subscriptions = new ArrayList<Subscription>();
-        features = new ArrayList<String>();
 
         //Country
         countryRes = new responseClass<List<Country>>();
@@ -308,16 +301,18 @@ public class managedBean implements Serializable {
         res_Business_master = new responseClass<List<BusinessMaster>>();
         save_BusinessMaster = new BusinessMaster();
 
-    }
+        branchMasters_list = new ArrayList<BranchMaster>();
+        gen_BranchMaster = new GenericType<responseClass<List<BranchMaster>>>() {
+        };
+        res_Branch_master = new responseClass<List<BranchMaster>>();
+        save_BranchMaster = new BranchMaster();
 
-    public List<Subscription> getSubscriptions() {
-        response = client.getSubscription(Response.class);
-        subscriptions = response.readEntity(genSubscriptionList);
-        return subscriptions;
-    }
+        subscriptions_List = new ArrayList<Subscription>();
+        gen_Subscription = new GenericType<responseClass<List<Subscription>>>() {
+        };
+        res_Subscription = new responseClass<List<Subscription>>();
+        save_Subscription = new Subscription();
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
     }
 
     public Contact getContact() {
@@ -333,12 +328,6 @@ public class managedBean implements Serializable {
         //client.sendMessage(contact);
         System.out.println(contact.getContactId() + "  " + contact.getEmail() + "  " + contact.getFirstname() + "  " + contact.getLastname()
                 + "     " + contact.getTitle() + "     " + contact.getMessage());
-    }
-
-    public List<String> displayFeatures(Subscription sub) {
-        features = Arrays.asList(sub.getFeatures().split(";"));
-        //features = Arrays.asList(subscriptions.get(pos).getFeatures().toString().split(";"));
-        return features;
     }
 
     public List<Country> DisplayCountries() {
@@ -389,7 +378,7 @@ public class managedBean implements Serializable {
 
     public void openNew() {
         this.selectedCountry = new Country();
-
+        this.selectedDepartment = new DepartmentMaster();
     }
 
     public void openNew2() {
@@ -663,34 +652,50 @@ public class managedBean implements Serializable {
         return businessMasters_list;
     }
 
-    private boolean showTable;
+    public List<BranchMaster> DisplayAllBranach() {
+        response = client.getallbranchMaster(Response.class);
+        res_Branch_master = response.readEntity(gen_BranchMaster);
+        branchMasters_list = res_Branch_master.getData();
 
-    public boolean isShowTable() {
-        return showTable;
+        return branchMasters_list;
     }
 
-    public void setShowTable(boolean showTable) {
-        this.showTable = showTable;
+//    public List<Subscription> DisplayAllSubscription() {
+//        response = client.getallSubscription(Response.class);
+//        res_Subscription = response.readEntity(gen_Subscription);
+//        subscriptions_List = res_Subscription.getData();
+//
+//        return subscriptions_List;
+//    }
+    public List<Subscription> DisplayActiveSubscription() {
+        response = client.getallSubscription(Response.class);
+        res_Subscription = response.readEntity(gen_Subscription);
+        subscriptions_List = res_Subscription.getData();
+        List<Subscription> activeSubscriptions = new ArrayList<>();
+        for (int i = 0; i < subscriptions_List.size(); i++) {
+            if (subscriptions_List.get(i).getActive()) {
+                activeSubscriptions.add(subscriptions_List.get(i));
+            }
+        }
+        return activeSubscriptions;
+    }
+
+    public List<Subscription> DisplayUnActiveSub() {
+        response = client.getallSubscription(Response.class);
+        res_Subscription = response.readEntity(gen_Subscription);
+        subscriptions_List = res_Subscription.getData();
+        List<Subscription> UNactiveSubscriptions = new ArrayList<>();
+        for (int i = 0; i < subscriptions_List.size(); i++) {
+            if (subscriptions_List.get(i).getActive()) {
+                UNactiveSubscriptions.add(subscriptions_List.get(i));
+            }
+        }
+        return UNactiveSubscriptions;
     }
 
     public void showDataTable() {
-        showTable = true;
+        PrimeFaces.current().executeScript("PF('productDialog').hide();");
+
     }
 
-//    
-//    
-//    public void openLevel1() {
-//        Map<String, Object> options = new HashMap<String, Object>();
-//        options.put("modal", true);
-//        PrimeFaces.current().dialog().openDynamic("level1", options, null);
-//    }
-//
-//    public void openLevel1WithFlash() {
-//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("param1", LocalDateTime.now());
-//        openLevel1();
-//    }
-//
-//    public void onReturnFromLevel1(SelectEvent event) {
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Data Returned", event.getObject().toString()));
-//    }
 }

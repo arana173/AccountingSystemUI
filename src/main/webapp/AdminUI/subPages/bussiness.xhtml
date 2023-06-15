@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="../css/vertical-layout-light/style.css"/>
         <link rel="shortcut icon" href="../images/favicon.png" />
 
+
         <style>
             body .ui-panelgrid .ui-panelgrid-cell{
                 padding: 0 !important;
@@ -31,40 +32,21 @@
                     <div class="content-wrapper">
                         <div class="row">
                             <h:form id="form">
-                                Toolbar Start
+
                                 <p:growl id="messages" showDetail="true" />
-                                <p:toolbar>
-                                    <p:toolbarGroup>
 
-                                    </p:toolbarGroup>
-                                    <p:toolbarGroup align="right">
-                                        <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download" />
 
-                                        <p:commandButton value="Export" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
-                                            <p:dataExporter type="pdf" target="dt-products" fileName="products" />
-                                        </p:commandButton>
-                                    </p:toolbarGroup>
-                                </p:toolbar>
-                                <!--                                Toolbar End  
-                                
-                                                                Datatable Start-->
                                 <div style="margin: 60px;" >
                                     <div id="contxt">
                                         <p:contextMenu for="products">
                                             <p:menuitem value="View Business" icon="pi pi-search" update="productDetail"
                                                         oncomplete="PF('productDialog').show()"/>
-<!--                                            <p:menuitem value="View Business" icon="pi pi-search" action="#{manageData.openLevel1WithFlash}"  >
-    <p:ajax event="dialogReturn" listener="#{manageData.onReturnFromLevel1}"/>
-</p:menuitem>-->
-                                            <!--                                            <p:menuitem value="View Branch" icon="pi pi-search" update="productDetail"
-                                                                                                    oncomplete="PF('productDialog').show()"/>-->
-                                            <p:menuitem value="Delete"  icon="pi pi-times"
-                                                        />
+
 
                                         </p:contextMenu>
                                         <p:dialog header="Department Info" widgetVar="productDialog" modal="true" showEffect="fade"
-                                                  hideEffect="fade" resizable="false">
-                                            <p:outputPanel id="productDetail" style="text-align:center;">
+                                                  hideEffect="fade" resizable="false" onHide="#{manageData.openNew()}">
+                                            <p:outputPanel id="productDetail"   style="text-align:center;">
 
                                                 <h2> <h:outputText value="#{manageData.selectedDepartment.departmentName}" />  </h2>
                                                 <div class="container">
@@ -84,32 +66,30 @@
 
                                                         </p:tabView>
                                                     </div>
-                                                    <p:commandButton value="Show All Branch" />&nbsp;
-                                                    <p:commandButton value="Show All Business" action="#{manageData.showDataTable()}"/>
+                                                    <p:commandButton value="Show All Branch"   onclick="scrollToDivBRanch()" action="#{manageData.showDataTable()}"/>&nbsp;
+                                                    <p:commandButton value="Show All Business" onclick="scrollToDivBusiness()"   action="#{manageData.showDataTable()}"/>
 
                                                 </div>
                                             </p:outputPanel>
                                         </p:dialog>
-                                        <!-- -->
 
-                                        <p:dataTable id="products" widgetVar="dtProducts" var="bussiness" value="#{manageData.DisplayDepartmentsData()}"
+
+                                        <p:dataTable id="products" widgetVar="dtdepartment" var="dept" value="#{manageData.DisplayDepartmentsData()}"
                                                      reflow="true" styleClass="products-table"   selection="#{manageData.selectedDepartment}" selectionMode="single"
-                                                     onRowClick=""  rowKey="#{bussiness.departmentId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                                     rowKey="#{dept.departmentId}" paginator="true" rows="5"  paginatorPosition="bottom">
                                             <f:facet name="header">
                                                 <div class="products-table-header">
-                                                    <span style="font-weight: bold">Department</span>
+                                                    <span style="font-weight: bold">Department List</span>
                                                 </div>
                                             </f:facet>
 
-                                            <p:column style="width:2rem">
-                                                <p:rowToggler/>
-                                            </p:column>
-                                            <p:column headerText="Department Id" sortBy="#{bussiness.departmentId}" filterBy="#{bussiness.departmentId}">
-                                                <h:outputText value="#{bussiness.departmentId}" />
+
+                                            <p:column headerText="Department Id" sortBy="#{dept.departmentId}" filterBy="#{dept.departmentId}">
+                                                <h:outputText value="#{dept.departmentId}" />
                                             </p:column>
 
-                                            <p:column id="dt-context" headerText="Department Title" sortBy="#{bussiness.departmentName}" filterBy="#{bussiness.departmentName}">
-                                                <h:outputText value="#{bussiness.departmentName}" />
+                                            <p:column id="dt-context" headerText="Department Title" sortBy="#{dept.departmentName}" filterBy="#{dept.departmentName}">
+                                                <h:outputText value="#{dept.departmentName}" />
                                             </p:column>
                                         </p:dataTable>
 
@@ -117,49 +97,71 @@
 
 
 
+                                    <div id="btb">
+                                        <p:dataTable  id="dt-business"  widgetVar="dtbussiness" var="bussiness" value="#{manageData.DiplayAllBussiness()}"
+                                                      reflow="true" styleClass="products-table" selectionMode="single"
+                                                      onRowClick=""  rowKey="#{bussiness.businessId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                            <f:facet name="header">
+                                                <div class="products-table-header">
+                                                    <span style="font-weight: bold">Business</span>
+                                                </div>
+                                            </f:facet>
 
-                                    <p:dataTable rendered="#{manageData.showTable}" id="dt-business"  widgetVar="dtProducts" var="bussiness" value="#{manageData.DiplayAllBussiness()}"
-                                                  reflow="true" styleClass="products-table"   selection="#{manageData.selectedBussines}" selectionMode="single"
-                                                  onRowClick=""  rowKey="#{bussiness.businessId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
-                                        <f:facet name="header">
-                                            <div class="products-table-header">
-                                                <span style="font-weight: bold">Business</span>
-                                            </div>
-                                        </f:facet>
 
-                                        <p:column style="width:2rem">
-                                            <p:rowToggler/>
-                                        </p:column>
-                                        <p:column headerText="bussiness Id" sortBy="#{bussiness.businessId}" filterBy="#{bussiness.departmentId}">
-                                            <h:outputText value="#{bussiness.businessTitle}" />
-                                        </p:column>
+                                            <p:column headerText="bussiness Id" sortBy="#{bussiness.businessId}" filterBy="#{bussiness.departmentId}">
+                                                <h:outputText value="#{bussiness.businessTitle}" />
+                                            </p:column>
 
-                                        <p:column id="dt-context" headerText="bussiness Title" sortBy="#{bussiness.businessTitle}" filterBy="#{bussiness.departmentName}">
-                                            <h:outputText value="#{bussiness.businessTitle}" />
-                                        </p:column>
-                                    </p:dataTable>
+                                            <p:column id="dt-context" headerText="bussiness Title" sortBy="#{bussiness.businessTitle}" filterBy="#{bussiness.departmentName}">
+                                                <h:outputText value="#{bussiness.businessTitle}" />
+                                            </p:column>
+                                        </p:dataTable> 
+                                    </div>
 
+
+
+
+                                    <div id="branchb">
+                                        <p:dataTable  id="dt-branch"  widgetVar="dtbranch" var="brnach" value="#{manageData.DisplayAllBranach()}"
+                                                      reflow="true" styleClass="products-table" selectionMode="single"
+                                                      onRowClick=""  rowKey="#{brnach.branchId}" paginator="true" rows="5" rowSelectMode="add" paginatorPosition="bottom">
+                                            <f:facet name="header">
+                                                <div class="products-table-header">
+                                                    <span style="font-weight: bold">Branches</span>
+                                                </div>
+                                            </f:facet>
+
+
+                                            <p:column headerText="Brnach Id" sortBy="#{brnach.branchId}" filterBy="#{brnach.branchId}">
+                                                <h:outputText value="#{brnach.branchId}" />
+                                            </p:column>
+
+                                            <p:column id="dt-context" headerText="Branch Name" sortBy="#{brnach.branchName}" filterBy="#{brnach.branchName}">
+                                                <h:outputText value="#{brnach.branchName}" />
+                                            </p:column>
+                                        </p:dataTable> 
+
+                                    </div>
                                 </div>
                             </h:form>
-                        
-
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
 
 
-
-
-
-
-
-
-
-
-
+        <script>
+            function scrollToDivBRanch() {
+                var divElement = document.getElementById("branchb");
+                divElement.scrollIntoView({behavior: 'smooth'});
+            }
+            function scrollToDivBusiness()
+            {
+                var divElement = document.getElementById("btb");
+                divElement.scrollIntoView({behavior: 'smooth'});
+            }
+        </script>
 
 
     </h:body>

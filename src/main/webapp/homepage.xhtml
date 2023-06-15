@@ -1,3 +1,4 @@
+
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -25,10 +26,9 @@
         <!--     Libraries Stylesheet -->
         <link href="UserUI/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
         <link href="UserUI/lib/animate/animate.min.css" rel="stylesheet"/>    
-
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/primeflex.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/UserUI/css/style.css"/>
     </h:head>
-
     <h:body>
         <h:form>
             <!-- Spinner Start -->
@@ -52,7 +52,7 @@
                             <h:link class="nav-item nav-link active" outcome="homepage" value="Home" />
                             <h:link class="nav-item nav-link" outcome="UserUI/about" value="About" />
                             <h:link class="nav-item nav-link" outcome="UserUI/services" value="Services" />
-                            
+
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0">
@@ -61,7 +61,7 @@
                                     <h:link class="dropdown-item" outcome="UserUI/teamMembers" value="Team Members" />
                                 </div>
                             </div>
-                           <h:link class="nav-item nav-link" outcome="UserUI/contact" value="Contact"/>
+                            <h:link class="nav-item nav-link" outcome="UserUI/contact" value="Contact"/>
                         </div>
                     </div>
                 </nav>
